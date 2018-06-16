@@ -130,13 +130,9 @@ class PaginationCriteria implements Criteria
      */
     protected function resolveCurrentPage(Request $request)
     {
-        $page = $request->input($this->pageName);
+        $page = (int) $request->input($this->pageName);
 
-        if (filter_var($page, FILTER_VALIDATE_INT) !== false && (int) $page >= 1) {
-            return $page;
-        }
-
-        return 1;
+        return ($page >= 1) ? $page : 1;
     }
 
     /**

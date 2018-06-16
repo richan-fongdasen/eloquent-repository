@@ -12,7 +12,7 @@ trait HasCriterias
     /**
      * Registered criterias collection.
      *
-     * @var array
+     * @var \Illuminate\Support\Collection
      */
     protected $criterias;
 
@@ -97,9 +97,9 @@ trait HasCriterias
     /**
      * Get the registered criteria(s).
      *
-     * @param string $class
+     * @param string|null $class
      *
-     * @return array
+     * @return mixed
      */
     public function getCriteria($class = null)
     {
@@ -119,7 +119,7 @@ trait HasCriterias
      *
      * @param array $criterias
      *
-     * @return mixed
+     * @return $this
      */
     public function pushCriteria(array $criterias)
     {
@@ -135,7 +135,7 @@ trait HasCriterias
      *
      * @param mixed $criterias
      *
-     * @return mixed
+     * @return $this
      */
     public function removeCriteria($criterias)
     {
