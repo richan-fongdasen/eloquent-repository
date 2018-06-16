@@ -53,7 +53,7 @@ class PaginationCriteria implements Criteria
     protected $recordCount;
 
     /**
-     * Class constructor
+     * Class constructor.
      *
      * @param \Illuminate\Http\Request $request
      */
@@ -66,8 +66,9 @@ class PaginationCriteria implements Criteria
     /**
      * Build the LengthAwarePaginator object.
      *
-     * @param  \Illuminate\Database\Eloquent\Builder $query
-     * @param  int                                   $perPage
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param int                                   $perPage
+     *
      * @return \Illuminate\Pagination\LengthAwarePaginator
      */
     public function buildPaginator(Builder $query, int $perPage)
@@ -76,8 +77,8 @@ class PaginationCriteria implements Criteria
         $this->manipulate($query);
 
         $options = [
-            'path' => $this->currentPath,
-            'pageName' => $this->pageName
+            'path'     => $this->currentPath,
+            'pageName' => $this->pageName,
         ];
 
         return new LengthAwarePaginator(
@@ -93,7 +94,8 @@ class PaginationCriteria implements Criteria
      * Apply the criteria and manipulate the given
      * eloquent query builder.
      *
-     * @param  \Illuminate\Database\Eloquent\Builder $query
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     *
      * @return \Illuminate\Database\Eloquent\Builder
      */
     public function manipulate(Builder $query)
@@ -111,7 +113,7 @@ class PaginationCriteria implements Criteria
      * Specify whether the criteria will only be implemented
      * on demand, or it should be implemented automatically.
      *
-     * @return boolean
+     * @return bool
      */
     public function onDemandOnly()
     {
@@ -122,7 +124,8 @@ class PaginationCriteria implements Criteria
      * Resolve current page value based on the given
      * Request object.
      *
-     * @param  \Illuminate\Http\Request $request
+     * @param \Illuminate\Http\Request $request
+     *
      * @return int
      */
     protected function resolveCurrentPage(Request $request)
@@ -138,8 +141,9 @@ class PaginationCriteria implements Criteria
 
     /**
      * Set a model object for the criteria.
-     * 
-     * @param  \Illuminate\Database\Eloquent\Model $model
+     *
+     * @param \Illuminate\Database\Eloquent\Model $model
+     *
      * @return void
      */
     public function setModel(Model $model)

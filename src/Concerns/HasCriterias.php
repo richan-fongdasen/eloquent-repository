@@ -10,7 +10,7 @@ use RichanFongdasen\Repository\Contracts\Criteria;
 trait HasCriterias
 {
     /**
-     * Registered criterias collection
+     * Registered criterias collection.
      *
      * @var array
      */
@@ -20,7 +20,7 @@ trait HasCriterias
      * Apply the registered criterias to
      * the given Eloquent Builder.
      *
-     * @param  \Illuminate\Database\Eloquent\Builder $query
+     * @param \Illuminate\Database\Eloquent\Builder $query
      *
      * @return \Illuminate\Database\Eloquent\Builder
      */
@@ -30,6 +30,7 @@ trait HasCriterias
             if (!$criteria->onDemandOnly()) {
                 $criteria->manipulate($query);
             }
+
             return $key;
         });
 
@@ -37,7 +38,7 @@ trait HasCriterias
     }
 
     /**
-     * Boot HasCriterias
+     * Boot HasCriterias.
      *
      * @return void
      */
@@ -50,7 +51,7 @@ trait HasCriterias
      * Build the given criteria class and register
      * the initiated criteria instance.
      *
-     * @param  mixed $criteria
+     * @param mixed $criteria
      *
      * @return void
      */
@@ -82,7 +83,8 @@ trait HasCriterias
     /**
      * Forget the given criteria from collection.
      *
-     * @param  string $criteria
+     * @param string $criteria
+     *
      * @return void
      */
     protected function forgetCriteria(string $criteria)
@@ -95,7 +97,8 @@ trait HasCriterias
     /**
      * Get the registered criteria(s).
      *
-     * @param  string $class
+     * @param string $class
+     *
      * @return array
      */
     public function getCriteria(string $class = null)
@@ -103,17 +106,18 @@ trait HasCriterias
         if (empty($class)) {
             return $this->criterias;
         }
-        
+
         if (!$this->criterias->has($class)) {
             return null;
         }
+
         return $this->criterias->get($class);
     }
 
     /**
      * Push / register the given criterias.
      *
-     * @param  array $criterias
+     * @param array $criterias
      *
      * @return mixed
      */
@@ -129,7 +133,8 @@ trait HasCriterias
     /**
      * Remove / unregister the given criterias.
      *
-     * @param  mixed $criterias
+     * @param mixed $criterias
+     *
      * @return mixed
      */
     public function removeCriteria($criterias)
