@@ -87,7 +87,7 @@ trait HasCriterias
      *
      * @return void
      */
-    protected function forgetCriteria(string $criteria)
+    protected function forgetCriteria($criteria)
     {
         if ($this->criterias->has($criteria)) {
             $this->criterias->forget($criteria);
@@ -101,7 +101,7 @@ trait HasCriterias
      *
      * @return array
      */
-    public function getCriteria(string $class = null)
+    public function getCriteria($class = null)
     {
         if (empty($class)) {
             return $this->criterias;

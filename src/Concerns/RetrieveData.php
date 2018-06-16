@@ -74,7 +74,7 @@ trait RetrieveData
      *
      * @return \Illuminate\Database\Eloquent\Collection
      */
-    public function findAllBy(string $column, string $operator, string $value = null)
+    public function findAllBy($column, $operator, $value = null)
     {
         return $this->newQuery()
             ->where($column, $operator, $value)
@@ -105,7 +105,7 @@ trait RetrieveData
      *
      * @return \Illuminate\Database\Eloquent\Model|null
      */
-    public function findBy(string $column, string $operator, string $value = null)
+    public function findBy($column, $operator, $value = null)
     {
         return $this->newQuery()
             ->where($column, $operator, $value)
@@ -147,12 +147,9 @@ trait RetrieveData
      *
      * @return $this
      */
-    public function limit(int $limit)
+    public function limit($limit)
     {
-        if ($limit < 0) {
-            $limit = 0;
-        }
-        $this->limit = $limit;
+        $this->limit = (int) $limit;
 
         return $this;
     }
@@ -165,11 +162,8 @@ trait RetrieveData
      *
      * @return $this
      */
-    public function orderBy(string $column, string $direction = null)
+    public function orderBy($column, $direction = 'asc')
     {
-        if (empty($direction)) {
-            $direction = 'asc';
-        }
         $this->order[$column] = $direction;
 
         return $this;
@@ -179,19 +173,19 @@ trait RetrieveData
      * Apply the given where clauses into a new query and
      * paginate the query into a length aware paginator.
      *
-     * @param array   $conditions
-     * @param int|int $perPage
+     * @param array $conditions
+     * @param int   $perPage
      *
      * @return \Illuminate\Pagination\LengthAwarePaginator
      */
-    public function paginate(array $conditions = [], int $perPage = 0)
+    public function paginate($conditions = [], $perPage = 0)
     {
         $this->limit(0);
 
         $query = ScopeBuilder::generate($this->newQuery(), $conditions);
 
         return $this->getPaginatorCriteria()
-            ->buildPaginator($query, $perPage);
+            ->buildPaginator($query, (int) $perPage);
     }
 
     /**
@@ -202,7 +196,7 @@ trait RetrieveData
      *
      * @return \Illuminate\Support\Collection
      */
-    public function pluck(string $column, string $key = null)
+    public function pluck($column, $key = null)
     {
         $query = $this->newQuery();
 
@@ -262,7 +256,7 @@ trait RetrieveData
      *
      * @return array
      */
-    abstract public function getCriteria(string $class = null);
+    abstract public function getCriteria($class = null);
 
     /**
      * Get new prepared eloquent query builder instance.

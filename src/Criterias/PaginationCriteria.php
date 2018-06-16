@@ -71,7 +71,7 @@ class PaginationCriteria implements Criteria
      *
      * @return \Illuminate\Pagination\LengthAwarePaginator
      */
-    public function buildPaginator(Builder $query, int $perPage)
+    public function buildPaginator(Builder $query, $perPage)
     {
         $this->setPerPage($perPage);
         $this->manipulate($query);
@@ -156,7 +156,7 @@ class PaginationCriteria implements Criteria
      *
      * @param int $perPage
      */
-    public function setPerPage(int $perPage)
+    public function setPerPage($perPage)
     {
         if ($perPage < 1) {
             $perPage = $this->model->getPerPage();
