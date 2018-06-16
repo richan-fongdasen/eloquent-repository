@@ -3,6 +3,8 @@
 namespace RichanFongdasen\Repository\Tests\Concerns;
 
 use RichanFongdasen\Repository\Tests\Supports\Models\Post;
+use RichanFongdasen\Repository\Tests\Supports\Models\PostCategory;
+use RichanFongdasen\Repository\Tests\Supports\Repositories\PostCategoryRepository;
 use RichanFongdasen\Repository\Tests\Supports\Repositories\PostRepository;
 use RichanFongdasen\Repository\Tests\TestCase;
 
@@ -92,13 +94,15 @@ class ManipulateDataTests extends TestCase
     /** @test */
     public function it_can_restore_deleted_model_based_on_the_given_primary_key()
     {
-        $model = $this->createNewPost();
-        $this->repository->delete($model->getKey());
-        $this->repository->restore($model->getKey());
+        $repository = app(PostCategoryRepository::class);
+        $model = $repository->create(['title' => 'test category']);        
 
-        $restored = $this->repository->find($model->getKey());
+        $repository->delete($model->getKey());
+        $repository->restore($model->getKey());
 
-        $this->assertInstanceOf(Post::class, $restored);
+        $restored = $repository->find($model->getKey());
+
+        $this->assertInstanceOf(PostCategory::class, $restored);
         $this->assertEquals($model->getKey(), $restored->getKey());
         $this->assertTrue($restored->exists);
         $this->assertFalse($restored->wasRecentlyCreated);

@@ -7,6 +7,7 @@ use InvalidArgumentException;
 use RichanFongdasen\Repository\Criterias\PaginationCriteria;
 use RichanFongdasen\Repository\Criterias\WithTrashedCriteria;
 use RichanFongdasen\Repository\Tests\Supports\Models\Post;
+use RichanFongdasen\Repository\Tests\Supports\Repositories\PostCategoryRepository;
 use RichanFongdasen\Repository\Tests\Supports\Repositories\PostRepository;
 use RichanFongdasen\Repository\Tests\TestCase;
 
@@ -97,13 +98,19 @@ class HasCriteriasTests extends TestCase
     /** @test */
     public function not_on_demand_criteria_will_be_implemented_immediately()
     {
-        $expected = 'select "id", "user_id", "title" from "posts" order by "created_at" desc limit 10';
-        $this->repository->pushCriteria([WithTrashedCriteria::class]);
-        $this->repository->select(['id', 'user_id', 'title'])
+        $repository = app(PostCategoryRepository::class);
+
+        $expected = \DB::table('post_categories')
+            ->select(['id', 'title', 'updated_at'])
+            ->limit(10)
+            ->orderBy('created_at', 'desc')->toSql();
+
+        $repository->pushCriteria([WithTrashedCriteria::class]);
+        $repository->select(['id', 'title', 'updated_at'])
             ->limit(10)
             ->orderBy('created_at', 'desc');
 
-        $query = $this->repository->newQuery();
+        $query = $repository->newQuery();
         
         $this->assertEquals($expected, $query->toSql());
     }

@@ -2,6 +2,7 @@
 
 namespace RichanFongdasen\Repository\Tests;
 
+use RichanFongdasen\Repository\Criterias\WithTrashedCriteria;
 use RichanFongdasen\Repository\ScopeBuilder;
 use RichanFongdasen\Repository\Tests\Supports\Models\Post;
 use RichanFongdasen\Repository\Tests\Supports\Repositories\PostRepository;
@@ -35,12 +36,12 @@ class ScopeBuilderTests extends TestCase
         ];
 
         $expected = [
-            'select * from "posts" where "post_category_id" = ? and "posts"."deleted_at" is null',
-            'select * from "posts" where "created_at" > ? and "posts"."deleted_at" is null'
+            \DB::table('posts')->where('post_category_id', 1)->toSql(),
+            \DB::table('posts')->where('created_at', '>', $datetime)->toSql()
         ];
 
         foreach ($params as $column => $value) {
-            $query = $this->repository->plainQuery();
+            $query = $this->repository->newQuery();
 
             ScopeBuilder::apply($query, $column, $value);
             
@@ -51,8 +52,8 @@ class ScopeBuilderTests extends TestCase
     /** @test */
     public function it_can_handle_single_scope_application_with_single_value_correctly()
     {
-        $expected = 'select * from "posts" where "published" = ? and "posts"."deleted_at" is null';
-        $query = $this->repository->plainQuery();
+        $expected = \DB::table('posts')->where('published', true)->toSql();
+        $query = $this->repository->newQuery();
 
         ScopeBuilder::apply($query, 'published', true);
         $this->assertEquals($expected, $query->toSql());
@@ -61,8 +62,9 @@ class ScopeBuilderTests extends TestCase
     /** @test */
     public function it_can_handle_single_scope_application_with_multiple_values_correctly()
     {
-        $expected = 'select * from "posts" where "post_category_id" in (?, ?, ?) and "posts"."deleted_at" is null';
-        $query = $this->repository->plainQuery();
+        $expected = \DB::table('posts')
+            ->whereIn('post_category_id', [1, 2, 3])->toSql();
+        $query = $this->repository->newQuery();
 
         ScopeBuilder::apply($query, 'post_category_id', [1, 2, 3]);
         $this->assertEquals($expected, $query->toSql());
@@ -71,13 +73,16 @@ class ScopeBuilderTests extends TestCase
     /** @test */
     public function it_can_generate_and_apply_multiple_scopes_correctly()
     {
-        $expected = 'select * from "posts" where "post_category_id" in (?, ?, ?) and "published" = ? and "title" like ? and "posts"."deleted_at" is null';
+        $expected = \DB::table('posts')
+            ->whereIn('post_category_id', [1, 2, 3])
+            ->where('published', true)
+            ->where('title', 'like', '%hello world%')->toSql();
         $conditions = [
             'post_category_id' => [1, 2, 3],
             'published' => true,
             ['title', 'like', '%hello world%']
         ];
-        $query = $this->repository->plainQuery();
+        $query = $this->repository->newQuery();
 
         ScopeBuilder::generate($query, $conditions);
         $this->assertEquals($expected, $query->toSql());

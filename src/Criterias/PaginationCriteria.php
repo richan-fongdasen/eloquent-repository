@@ -102,7 +102,7 @@ class PaginationCriteria implements Criteria
     {
         $this->recordCount = method_exists($query, 'toBase') ?
             $query->toBase()->getCountForPagination() :
-            $query->getCountForPagination();
+            $query->getQuery()->getCountForPagination();
 
         $query->forPage($this->currentPage, $this->perPage);
 

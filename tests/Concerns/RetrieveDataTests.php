@@ -158,7 +158,8 @@ class RetrieveDataTests extends TestCase
     /** @test */
     public function it_can_normalize_null_sort_direction()
     {
-        $expected = 'select * from "posts" where "posts"."deleted_at" is null order by "post_category_id" asc';
+        $expected = \DB::table('posts')->orderBy('post_category_id', 'asc')->toSql();
+
         $query = $this->post->orderBy('post_category_id')->newQuery();
 
         $this->assertEquals($expected, $query->toSql());

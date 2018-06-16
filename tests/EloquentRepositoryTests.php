@@ -2,7 +2,9 @@
 
 namespace RichanFongdasen\Repository\Tests;
 
+use RichanFongdasen\Repository\Criterias\WithTrashedCriteria;
 use RichanFongdasen\Repository\Tests\Supports\Models\Post;
+use RichanFongdasen\Repository\Tests\Supports\Repositories\PostCategoryRepository;
 use RichanFongdasen\Repository\Tests\Supports\Repositories\PostRepository;
 
 class EloquentRepositoryTests extends TestCase
@@ -45,7 +47,10 @@ class EloquentRepositoryTests extends TestCase
 
         $query = $this->repository->newQuery();
         
-        $expected = 'select "id", "post_category_id", "user_id", "title" from "posts" where "posts"."deleted_at" is null order by "created_at" desc limit 5';
+        $expected = \DB::table('posts')
+            ->select(['id', 'post_category_id', 'user_id', 'title'])
+            ->limit(5)
+            ->orderBy('created_at', 'desc')->toSql();
 
         $this->assertEquals($expected, $query->toSql());
     }
@@ -53,13 +58,15 @@ class EloquentRepositoryTests extends TestCase
     /** @test */
     public function it_returns_plain_eloquent_query_object_as_expected()
     {
-        $this->repository->select(['id', 'post_category_id', 'user_id', 'title'])
+        $repository = app(PostCategoryRepository::class);
+        $repository->select(['id', 'title', 'updated_at'])
             ->limit(5)
             ->orderBy('created_at', 'desc');
 
-        $query = $this->repository->plainQuery();
+        $query = $repository->plainQuery();
         
-        $expected = 'select * from "posts" where "posts"."deleted_at" is null';
+        $expected = \DB::table('post_categories')->where('post_categories.deleted_at', null)
+            ->toSql();
 
         $this->assertEquals($expected, $query->toSql());
     }
