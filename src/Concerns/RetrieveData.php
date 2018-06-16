@@ -165,8 +165,11 @@ trait RetrieveData
      *
      * @return $this
      */
-    public function orderBy(string $column, string $direction = 'asc')
+    public function orderBy(string $column, string $direction = null)
     {
+        if (empty($direction)) {
+            $direction = 'asc';
+        }
         $this->order[$column] = $direction;
 
         return $this;

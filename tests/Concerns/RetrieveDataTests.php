@@ -156,6 +156,15 @@ class RetrieveDataTests extends TestCase
     }
 
     /** @test */
+    public function it_can_normalize_null_sort_direction()
+    {
+        $expected = 'select * from "posts" where "posts"."deleted_at" is null order by "post_category_id" asc';
+        $query = $this->post->orderBy('post_category_id')->newQuery();
+
+        $this->assertEquals($expected, $query->toSql());
+    }
+
+    /** @test */
     public function it_returns_an_array_list_as_expected()
     {
         $collection = $this->postCategory->pluck('title', 'id');
