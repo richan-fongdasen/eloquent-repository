@@ -7,7 +7,8 @@ trait ManipulateData
     /**
      * Save a new model and return the instance.
      *
-     * @param  array  $attributes
+     * @param array $attributes
+     *
      * @return \Illuminate\Database\Eloquent\Model
      */
     public function create(array $attributes)
@@ -19,8 +20,9 @@ trait ManipulateData
      * Find and delete a model from the database
      * based on the given primary key.
      *
-     * @param  mixed $key
-     * @return boolean
+     * @param mixed $key
+     *
+     * @return bool
      */
     public function delete($key)
     {
@@ -30,7 +32,8 @@ trait ManipulateData
     /**
      * Get the first record matching the attributes or create it.
      *
-     * @param  array  $attributes
+     * @param array $attributes
+     *
      * @return \Illuminate\Database\Eloquent\Model
      */
     public function firstOrCreate(array $attributes)
@@ -41,7 +44,8 @@ trait ManipulateData
     /**
      * Get the first record matching the attributes or instantiate it.
      *
-     * @param  array  $attributes
+     * @param array $attributes
+     *
      * @return \Illuminate\Database\Eloquent\Model
      */
     public function firstOrNew(array $attributes)
@@ -53,8 +57,9 @@ trait ManipulateData
      * Find and restore a soft-deleted model instance
      * based on the given primary key.
      *
-     * @param  mixed $key
-     * @return boolean
+     * @param mixed $key
+     *
+     * @return bool
      */
     public function restore($key)
     {
@@ -68,9 +73,10 @@ trait ManipulateData
      * Find and update a model in the database
      * based on the given primary key.
      *
-     * @param  mixed  $key
-     * @param  array  $attributes
-     * @return boolean
+     * @param mixed $key
+     * @param array $attributes
+     *
+     * @return bool
      */
     public function update($key, array $attributes)
     {
@@ -82,8 +88,9 @@ trait ManipulateData
     /**
      * Create or update a record matching the attributes, and fill it with values.
      *
-     * @param  array  $attributes
-     * @param  array  $values
+     * @param array $attributes
+     * @param array $values
+     *
      * @return \Illuminate\Database\Eloquent\Model
      */
     public function updateOrCreate(array $attributes, array $values)

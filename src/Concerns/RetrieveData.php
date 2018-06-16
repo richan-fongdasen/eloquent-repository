@@ -55,7 +55,8 @@ trait RetrieveData
     /**
      * Find one or more models by its primary keys.
      *
-     * @param  mixed  $key
+     * @param mixed $key
+     *
      * @return \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Collection|null
      */
     public function find($key)
@@ -67,9 +68,10 @@ trait RetrieveData
      * Find all matched models by using a basic where clause
      * in the query.
      *
-     * @param  string      $column
-     * @param  string      $operator
-     * @param  string|null $value
+     * @param string      $column
+     * @param string      $operator
+     * @param string|null $value
+     *
      * @return \Illuminate\Database\Eloquent\Collection
      */
     public function findAllBy(string $column, string $operator, string $value = null)
@@ -83,7 +85,8 @@ trait RetrieveData
      * Find all matched models by using multiple where clause
      * in the query.
      *
-     * @param  array  $conditions
+     * @param array $conditions
+     *
      * @return \Illuminate\Database\Eloquent\Collection
      */
     public function findAllWhere(array $conditions)
@@ -96,9 +99,10 @@ trait RetrieveData
      * Find one matched model by using a basic where clause
      * in the query.
      *
-     * @param  string      $column
-     * @param  string      $operator
-     * @param  string|null $value
+     * @param string      $column
+     * @param string      $operator
+     * @param string|null $value
+     *
      * @return \Illuminate\Database\Eloquent\Model|null
      */
     public function findBy(string $column, string $operator, string $value = null)
@@ -112,7 +116,8 @@ trait RetrieveData
      * Find one matched model by using multiple where clause
      * in the query.
      *
-     * @param  array  $conditions
+     * @param array $conditions
+     *
      * @return \Illuminate\Database\Eloquent\Model|null
      */
     public function findWhere(array $conditions)
@@ -131,13 +136,15 @@ trait RetrieveData
         if (!$paginator) {
             throw new ErrorException('PaginationCriteria is required for this operation');
         }
+
         return $paginator;
     }
 
     /**
      * Set the maximum number of records to return.
      *
-     * @param  int  $limit
+     * @param int $limit
+     *
      * @return $this
      */
     public function limit(int $limit)
@@ -153,8 +160,9 @@ trait RetrieveData
     /**
      * Add one or multiple "order by" clauses to the query.
      *
-     * @param  string  $column
-     * @param  string  $direction
+     * @param string $column
+     * @param string $direction
+     *
      * @return $this
      */
     public function orderBy(string $column, string $direction = 'asc')
@@ -168,8 +176,9 @@ trait RetrieveData
      * Apply the given where clauses into a new query and
      * paginate the query into a length aware paginator.
      *
-     * @param  array       $conditions
-     * @param  int|integer $perPage
+     * @param array   $conditions
+     * @param int|int $perPage
+     *
      * @return \Illuminate\Pagination\LengthAwarePaginator
      */
     public function paginate(array $conditions = [], int $perPage = 0)
@@ -185,8 +194,9 @@ trait RetrieveData
     /**
      * Get an array with the values of a given column.
      *
-     * @param  string      $column
-     * @param  string|null $key
+     * @param string      $column
+     * @param string|null $key
+     *
      * @return \Illuminate\Support\Collection
      */
     public function pluck(string $column, string $key = null)
@@ -201,7 +211,8 @@ trait RetrieveData
     /**
      * Prepare a new query.
      *
-     * @param  \Illuminate\Database\Eloquent\Builder $query
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     *
      * @return \Illuminate\Database\Eloquent\Builder
      */
     protected function prepareQuery(Builder $query)
@@ -244,7 +255,8 @@ trait RetrieveData
     /**
      * Get the registered criteria(s).
      *
-     * @param  string $class
+     * @param string $class
+     *
      * @return array
      */
     abstract public function getCriteria(string $class = null);

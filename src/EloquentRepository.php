@@ -43,7 +43,7 @@ abstract class EloquentRepository
         $class = get_class($this);
 
         foreach (class_uses_recursive($class) as $trait) {
-            $method = 'boot' . class_basename($trait);
+            $method = 'boot'.class_basename($trait);
             if (method_exists($this, $method)) {
                 $this->$method();
             }
@@ -68,7 +68,7 @@ abstract class EloquentRepository
     public function newQuery()
     {
         $query = $this->applyCriterias($this->plainQuery());
-        
+
         return $this->prepareQuery($query);
     }
 
