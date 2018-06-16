@@ -57,7 +57,7 @@ trait RetrieveData
      *
      * @param mixed $key
      *
-     * @return \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Collection|null
+     * @return object|null
      */
     public function find($key)
     {
@@ -103,7 +103,7 @@ trait RetrieveData
      * @param string      $operator
      * @param string|null $value
      *
-     * @return \Illuminate\Database\Eloquent\Model|null
+     * @return object|null
      */
     public function findBy($column, $operator, $value = null)
     {
@@ -118,7 +118,7 @@ trait RetrieveData
      *
      * @param array $conditions
      *
-     * @return \Illuminate\Database\Eloquent\Model|null
+     * @return object|null
      */
     public function findWhere(array $conditions)
     {
@@ -252,9 +252,9 @@ trait RetrieveData
     /**
      * Get the registered criteria(s).
      *
-     * @param string $class
+     * @param string|null $class
      *
-     * @return array
+     * @return mixed
      */
     abstract public function getCriteria($class = null);
 
