@@ -1,0 +1,51 @@
+{
+    "name": "richan-fongdasen/eloquent-repository",
+    "description": "An Eloquent Repository implementation in Laravel",
+    "type": "library",
+    "license": "MIT",
+    "homepage": "https://github.com/richan-fongdasen/eloquent-repository",
+    "keywords": [
+        "laravel",
+        "laravel-5-package",
+        "eloquent",
+        "repository"
+    ],
+    "authors": [
+        {
+            "name": "Richan Fongdasen",
+            "email": "richan.fongdasen@gmail.com"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/richan-fongdasen/eloquent-repository/issues",
+        "source": "https://github.com/richan-fongdasen/eloquent-repository"
+    },
+    "require": {
+        "php": "^5.5.9 || ^7.0 || ^7.1.3",
+        "illuminate/cache": "5.1.*|5.2.*|5.3.*|5.4.*|5.5.*|5.6.*",
+        "illuminate/database": "5.1.*|5.2.*|5.3.*|5.4.*|5.5.*|5.6.*",
+        "illuminate/support": "5.1.*|5.2.*|5.3.*|5.4.*|5.5.*|5.6.*"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "~7.0 || ~6.0 || ~5.2 || ~4.8",
+        "orchestra/testbench": "~3.1",
+        "orchestra/database": "~3.1",
+        "fzaninotto/faker": "~1.4",
+        "mockery/mockery": "~0.9.8"
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "autoload": {
+        "psr-4": {
+            "RichanFongdasen\\Repository\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "RichanFongdasen\\Repository\\Tests\\": "tests/"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
