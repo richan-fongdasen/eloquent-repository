@@ -53,6 +53,22 @@ trait RetrieveData
     }
 
     /**
+     * Build multiple query scopes, based on the
+     * given array $conditions. We will use the
+     * ScopeBuilder class in Laravel 5.1.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder $query
+     * @param  array                                 $conditions
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    protected function buildMultipleScope(Builder $query, array $conditions)
+    {
+        return method_exists($query->getQuery(), 'addArrayOfWheres') ?
+            $query->where($conditions) :
+            ScopeBuilder::generate($query, $conditions);
+    }
+
+    /**
      * Find one or more models by its primary keys.
      *
      * @param mixed $key
@@ -91,7 +107,7 @@ trait RetrieveData
      */
     public function findAllWhere(array $conditions)
     {
-        return ScopeBuilder::generate($this->newQuery(), $conditions)
+        return $this->buildMultipleScope($this->newQuery(), $conditions)
             ->get();
     }
 
@@ -122,7 +138,7 @@ trait RetrieveData
      */
     public function findWhere(array $conditions)
     {
-        return ScopeBuilder::generate($this->newQuery(), $conditions)->first();
+        return $this->buildMultipleScope($this->newQuery(), $conditions)->first();
     }
 
     /**
@@ -182,7 +198,7 @@ trait RetrieveData
     {
         $this->limit(0);
 
-        $query = ScopeBuilder::generate($this->newQuery(), $conditions);
+        $query = $this->buildMultipleScope($this->newQuery(), $conditions);
 
         return $this->getPaginatorCriteria()
             ->buildPaginator($query, (int) $perPage);
