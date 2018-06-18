@@ -57,8 +57,9 @@ trait RetrieveData
      * given array $conditions. We will use the
      * ScopeBuilder class in Laravel 5.1.
      *
-     * @param  \Illuminate\Database\Eloquent\Builder $query
-     * @param  array                                 $conditions
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param array                                 $conditions
+     *
      * @return \Illuminate\Database\Eloquent\Builder
      */
     protected function buildMultipleScope(Builder $query, array $conditions)
