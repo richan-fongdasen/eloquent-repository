@@ -22,8 +22,10 @@ class HasCriteriasTests extends TestCase
 
     /**
      * Setup the test environment
+     *
+     * @return void
      */
-    public function setUp()
+    public function setUp() :void
     {
         parent::setUp();
 
