@@ -149,6 +149,7 @@ class PaginationCriteria implements Criteria
      * Set the number of items to be shown per page.
      *
      * @param int $perPage
+     *
      * @return void
      */
     public function setPerPage(int $perPage) :void
