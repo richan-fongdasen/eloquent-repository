@@ -78,7 +78,7 @@ trait RetrieveData
      *
      * @param mixed $key
      *
-     * @return \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Collection|static[]|static|null
+     * @return \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Collection|static[]|static|null|mixed
      */
     public function find($key)
     {
