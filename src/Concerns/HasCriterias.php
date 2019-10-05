@@ -3,6 +3,7 @@
 namespace RichanFongdasen\Repository\Concerns;
 
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 use InvalidArgumentException;
 use RichanFongdasen\Repository\Contracts\Criteria;
@@ -24,7 +25,7 @@ trait HasCriterias
      *
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    protected function applyCriterias(Builder $query)
+    protected function applyCriterias(Builder $query) :Builder
     {
         $this->criterias->each(function ($criteria, $key) use ($query) {
             if (!$criteria->onDemandOnly()) {
@@ -42,7 +43,7 @@ trait HasCriterias
      *
      * @return void
      */
-    protected function bootHasCriterias()
+    protected function bootHasCriterias() :void
     {
         $this->flushCriteria();
     }
@@ -55,14 +56,14 @@ trait HasCriterias
      *
      * @return void
      */
-    protected function buildCriteria($criteria)
+    protected function buildCriteria($criteria) :void
     {
         if (is_string($criteria)) {
             $criteria = \App::make($criteria);
         }
 
         if (!($criteria instanceof Criteria)) {
-            throw new InvalidArgumentException();
+            throw new InvalidArgumentException('Failed to build criteria, passed object is not an instance of criteria.');
         }
 
         $criteria->setModel($this->newModel());
@@ -75,7 +76,7 @@ trait HasCriterias
      *
      * @return void
      */
-    public function flushCriteria()
+    public function flushCriteria() :void
     {
         $this->criterias = collect();
     }
@@ -87,7 +88,7 @@ trait HasCriterias
      *
      * @return void
      */
-    protected function forgetCriteria($criteria)
+    protected function forgetCriteria(string $criteria) :void
     {
         if ($this->criterias->has($criteria)) {
             $this->criterias->forget($criteria);
@@ -101,9 +102,9 @@ trait HasCriterias
      *
      * @return mixed
      */
-    public function getCriteria($class = null)
+    public function getCriteria(string $class = null)
     {
-        if (empty($class)) {
+        if ($class === null) {
             return $this->criterias;
         }
 
@@ -121,7 +122,7 @@ trait HasCriterias
      *
      * @return $this
      */
-    public function pushCriteria(array $criterias)
+    public function pushCriteria(array $criterias) :self
     {
         foreach ($criterias as $criteria) {
             $this->buildCriteria($criteria);
@@ -137,7 +138,7 @@ trait HasCriterias
      *
      * @return $this
      */
-    public function removeCriteria($criterias)
+    public function removeCriteria($criterias) :self
     {
         $criterias = (array) $criterias;
 
@@ -153,5 +154,5 @@ trait HasCriterias
      *
      * @return \Illuminate\Database\Eloquent\Model
      */
-    abstract public function newModel();
+    abstract public function newModel() :Model;
 }

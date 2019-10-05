@@ -2,6 +2,10 @@
 
 namespace RichanFongdasen\Repository\Concerns;
 
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+
 trait ManipulateData
 {
     /**
@@ -11,7 +15,7 @@ trait ManipulateData
      *
      * @return \Illuminate\Database\Eloquent\Model
      */
-    public function create(array $attributes)
+    public function create(array $attributes) :Model
     {
         return $this->newModel()->create($attributes);
     }
@@ -22,9 +26,11 @@ trait ManipulateData
      *
      * @param mixed $key
      *
+     * @throws \Exception
+     *
      * @return bool
      */
-    public function delete($key)
+    public function delete($key) :bool
     {
         return $this->plainQuery()->findOrFail($key)->delete();
     }
@@ -34,7 +40,7 @@ trait ManipulateData
      *
      * @param array $attributes
      *
-     * @return \Illuminate\Database\Eloquent\Model
+     * @return \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Model
      */
     public function firstOrCreate(array $attributes)
     {
@@ -46,7 +52,7 @@ trait ManipulateData
      *
      * @param array $attributes
      *
-     * @return \Illuminate\Database\Eloquent\Model
+     * @return \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Model
      */
     public function firstOrNew(array $attributes)
     {
@@ -61,12 +67,12 @@ trait ManipulateData
      *
      * @return bool
      */
-    public function restore($key)
+    public function restore($key) :bool
     {
         return $this->plainQuery()
-                ->withTrashed()
-                ->findOrFail($key)
-                ->restore();
+            ->withTrashed()
+            ->findOrFail($key)
+            ->restore();
     }
 
     /**
@@ -76,13 +82,20 @@ trait ManipulateData
      * @param mixed $key
      * @param array $attributes
      *
+     * @throws ModelNotFoundException
+     *
      * @return bool
      */
-    public function update($key, array $attributes)
+    public function update($key, array $attributes) :bool
     {
-        return $this->plainQuery()
-            ->findOrFail($key)
-            ->update($attributes);
+        $model = $this->plainQuery()
+            ->find($key);
+
+        if (!($model instanceof Model)) {
+            throw new ModelNotFoundException('Failed to retrieve model '.get_class($this->model).' with key: '.$key);
+        }
+
+        return $model->update($attributes);
     }
 
     /**
@@ -91,7 +104,7 @@ trait ManipulateData
      * @param array $attributes
      * @param array $values
      *
-     * @return \Illuminate\Database\Eloquent\Model
+     * @return \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Model
      */
     public function updateOrCreate(array $attributes, array $values)
     {
@@ -103,12 +116,12 @@ trait ManipulateData
      *
      * @return \Illuminate\Database\Eloquent\Model
      */
-    abstract public function newModel();
+    abstract public function newModel() :Model;
 
     /**
      * Get new plain eloquent query builder instance.
      *
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    abstract public function plainQuery();
+    abstract public function plainQuery() :Builder;
 }

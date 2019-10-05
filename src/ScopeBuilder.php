@@ -15,7 +15,7 @@ class ScopeBuilder
      *
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public static function apply(Builder $query, $column, $value)
+    public static function apply(Builder $query, $column, $value) :Builder
     {
         if (is_numeric($column) && is_array($value)) {
             return call_user_func_array([$query, 'where'], $value);
@@ -32,7 +32,7 @@ class ScopeBuilder
      *
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public static function generate(Builder $query, array $conditions)
+    public static function generate(Builder $query, array $conditions) :Builder
     {
         foreach ($conditions as $column => $value) {
             static::apply($query, $column, $value);

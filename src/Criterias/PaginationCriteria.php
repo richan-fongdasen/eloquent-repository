@@ -71,7 +71,7 @@ class PaginationCriteria implements Criteria
      *
      * @return \Illuminate\Pagination\LengthAwarePaginator
      */
-    public function buildPaginator(Builder $query, $perPage)
+    public function buildPaginator(Builder $query, int $perPage) :LengthAwarePaginator
     {
         $this->setPerPage($perPage);
         $this->manipulate($query);
@@ -98,11 +98,9 @@ class PaginationCriteria implements Criteria
      *
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function manipulate(Builder $query)
+    public function manipulate(Builder $query) :Builder
     {
-        $this->recordCount = method_exists($query, 'toBase') ?
-            $query->toBase()->getCountForPagination() :
-            $query->getQuery()->getCountForPagination();
+        $this->recordCount = $query->toBase()->getCountForPagination();
 
         $query->forPage($this->currentPage, $this->perPage);
 
@@ -115,7 +113,7 @@ class PaginationCriteria implements Criteria
      *
      * @return bool
      */
-    public function onDemandOnly()
+    public function onDemandOnly() :bool
     {
         return true;
     }
@@ -128,7 +126,7 @@ class PaginationCriteria implements Criteria
      *
      * @return int
      */
-    protected function resolveCurrentPage(Request $request)
+    protected function resolveCurrentPage(Request $request) :int
     {
         $page = (int) $request->input($this->pageName);
 
@@ -142,7 +140,7 @@ class PaginationCriteria implements Criteria
      *
      * @return void
      */
-    public function setModel(Model $model)
+    public function setModel(Model $model) :void
     {
         $this->model = $model;
     }
@@ -151,8 +149,10 @@ class PaginationCriteria implements Criteria
      * Set the number of items to be shown per page.
      *
      * @param int $perPage
+     *
+     * @return void
      */
-    public function setPerPage($perPage)
+    public function setPerPage(int $perPage) :void
     {
         if ($perPage < 1) {
             $perPage = $this->model->getPerPage();

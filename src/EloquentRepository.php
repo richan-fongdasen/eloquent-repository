@@ -2,6 +2,7 @@
 
 namespace RichanFongdasen\Repository;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use RichanFongdasen\Repository\Concerns\HasCriterias;
 use RichanFongdasen\Repository\Concerns\ManipulateData;
@@ -38,7 +39,7 @@ abstract class EloquentRepository
      *
      * @return void
      */
-    protected function bootTraits()
+    protected function bootTraits() :void
     {
         $class = get_class($this);
 
@@ -55,7 +56,7 @@ abstract class EloquentRepository
      *
      * @return \Illuminate\Database\Eloquent\Model
      */
-    public function newModel()
+    public function newModel() :Model
     {
         return $this->model->newInstance();
     }
@@ -65,7 +66,7 @@ abstract class EloquentRepository
      *
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function newQuery()
+    public function newQuery() :Builder
     {
         $query = $this->applyCriterias($this->plainQuery());
 
@@ -77,7 +78,7 @@ abstract class EloquentRepository
      *
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function plainQuery()
+    public function plainQuery() :Builder
     {
         return $this->model->newQuery();
     }

@@ -4,6 +4,10 @@ namespace RichanFongdasen\Repository\Concerns;
 
 use ErrorException;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Collection as BaseCollection;
 use RichanFongdasen\Repository\Criterias\PaginationCriteria;
 use RichanFongdasen\Repository\ScopeBuilder;
 
@@ -35,7 +39,7 @@ trait RetrieveData
      *
      * @return \Illuminate\Database\Eloquent\Collection
      */
-    public function all()
+    public function all() :Collection
     {
         return $this->newQuery()->get();
     }
@@ -45,7 +49,7 @@ trait RetrieveData
      *
      * @return void
      */
-    protected function bootRetrieveData()
+    protected function bootRetrieveData() :void
     {
         $this->columns = ['*'];
         $this->limit = 0;
@@ -62,7 +66,7 @@ trait RetrieveData
      *
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    protected function buildMultipleScope(Builder $query, array $conditions)
+    protected function buildMultipleScope(Builder $query, array $conditions) :Builder
     {
         return method_exists($query->getQuery(), 'addArrayOfWheres') ?
             $query->where($conditions) :
@@ -74,7 +78,7 @@ trait RetrieveData
      *
      * @param mixed $key
      *
-     * @return object|null
+     * @return \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Collection|static[]|static|null
      */
     public function find($key)
     {
@@ -91,7 +95,7 @@ trait RetrieveData
      *
      * @return \Illuminate\Database\Eloquent\Collection
      */
-    public function findAllBy($column, $operator, $value = null)
+    public function findAllBy(string $column, string $operator, string $value = null) :Collection
     {
         return $this->newQuery()
             ->where($column, $operator, $value)
@@ -106,7 +110,7 @@ trait RetrieveData
      *
      * @return \Illuminate\Database\Eloquent\Collection
      */
-    public function findAllWhere(array $conditions)
+    public function findAllWhere(array $conditions) :Collection
     {
         return $this->buildMultipleScope($this->newQuery(), $conditions)
             ->get();
@@ -120,9 +124,9 @@ trait RetrieveData
      * @param string      $operator
      * @param string|null $value
      *
-     * @return object|null
+     * @return \Illuminate\Database\Eloquent\Model|null
      */
-    public function findBy($column, $operator, $value = null)
+    public function findBy(string $column, string $operator, string $value = null) :?Model
     {
         return $this->newQuery()
             ->where($column, $operator, $value)
@@ -135,9 +139,9 @@ trait RetrieveData
      *
      * @param array $conditions
      *
-     * @return object|null
+     * @return \Illuminate\Database\Eloquent\Model|null
      */
-    public function findWhere(array $conditions)
+    public function findWhere(array $conditions) :?Model
     {
         return $this->buildMultipleScope($this->newQuery(), $conditions)->first();
     }
@@ -145,9 +149,11 @@ trait RetrieveData
     /**
      * Get the paginator criteria.
      *
+     * @throws ErrorException
+     *
      * @return \RichanFongdasen\Repository\Criterias\PaginationCriteria
      */
-    protected function getPaginatorCriteria()
+    protected function getPaginatorCriteria() :PaginationCriteria
     {
         $paginator = $this->getCriteria(PaginationCriteria::class);
         if (!$paginator) {
@@ -164,9 +170,9 @@ trait RetrieveData
      *
      * @return $this
      */
-    public function limit($limit)
+    public function limit(int $limit) :self
     {
-        $this->limit = (int) $limit;
+        $this->limit = $limit;
 
         return $this;
     }
@@ -179,7 +185,7 @@ trait RetrieveData
      *
      * @return $this
      */
-    public function orderBy($column, $direction = 'asc')
+    public function orderBy(string $column, string $direction = 'asc') :self
     {
         $this->order[$column] = $direction;
 
@@ -193,16 +199,18 @@ trait RetrieveData
      * @param array $conditions
      * @param int   $perPage
      *
+     * @throws ErrorException
+     *
      * @return \Illuminate\Pagination\LengthAwarePaginator
      */
-    public function paginate($conditions = [], $perPage = 0)
+    public function paginate(array $conditions = [], int $perPage = 0) :LengthAwarePaginator
     {
         $this->limit(0);
 
         $query = $this->buildMultipleScope($this->newQuery(), $conditions);
 
         return $this->getPaginatorCriteria()
-            ->buildPaginator($query, (int) $perPage);
+            ->buildPaginator($query, $perPage);
     }
 
     /**
@@ -213,7 +221,7 @@ trait RetrieveData
      *
      * @return \Illuminate\Support\Collection
      */
-    public function pluck($column, $key = null)
+    public function pluck(string $column, string $key = null) :BaseCollection
     {
         $query = $this->newQuery();
 
@@ -229,7 +237,7 @@ trait RetrieveData
      *
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    protected function prepareQuery(Builder $query)
+    protected function prepareQuery(Builder $query) :Builder
     {
         $query->select($this->columns);
 
@@ -238,7 +246,7 @@ trait RetrieveData
         }
 
         foreach ($this->order as $column => $direction) {
-            $query->orderBy($column, $direction);
+            $query->orderBy((string) $column, (string) $direction);
         }
 
         $this->rebootRetrieveData();
@@ -251,12 +259,19 @@ trait RetrieveData
      *
      * @return void
      */
-    protected function rebootRetrieveData()
+    protected function rebootRetrieveData() :void
     {
         $this->bootRetrieveData();
     }
 
-    public function select(array $columns = [])
+    /**
+     * Define a set of columns to select from database.
+     *
+     * @param array $columns
+     *
+     * @return $this
+     */
+    public function select(array $columns = []) :self
     {
         if (empty($columns)) {
             $columns = ['*'];
@@ -273,12 +288,12 @@ trait RetrieveData
      *
      * @return mixed
      */
-    abstract public function getCriteria($class = null);
+    abstract public function getCriteria(string $class = null);
 
     /**
      * Get new prepared eloquent query builder instance.
      *
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    abstract public function newQuery();
+    abstract public function newQuery() :Builder;
 }
