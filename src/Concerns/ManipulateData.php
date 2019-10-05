@@ -2,7 +2,6 @@
 
 namespace RichanFongdasen\Repository\Concerns;
 
-use ErrorException;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -27,8 +26,9 @@ trait ManipulateData
      *
      * @param mixed $key
      *
-     * @return bool
      * @throws \Exception
+     *
+     * @return bool
      */
     public function delete($key) :bool
     {
@@ -82,8 +82,9 @@ trait ManipulateData
      * @param mixed $key
      * @param array $attributes
      *
-     * @return bool
      * @throws ModelNotFoundException
+     *
+     * @return bool
      */
     public function update($key, array $attributes) :bool
     {

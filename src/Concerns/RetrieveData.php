@@ -149,8 +149,9 @@ trait RetrieveData
     /**
      * Get the paginator criteria.
      *
-     * @return \RichanFongdasen\Repository\Criterias\PaginationCriteria
      * @throws ErrorException
+     *
+     * @return \RichanFongdasen\Repository\Criterias\PaginationCriteria
      */
     protected function getPaginatorCriteria() :PaginationCriteria
     {
@@ -196,10 +197,11 @@ trait RetrieveData
      * paginate the query into a length aware paginator.
      *
      * @param array $conditions
-     * @param int $perPage
+     * @param int   $perPage
+     *
+     * @throws ErrorException
      *
      * @return \Illuminate\Pagination\LengthAwarePaginator
-     * @throws ErrorException
      */
     public function paginate(array $conditions = [], int $perPage = 0) :LengthAwarePaginator
     {
@@ -266,6 +268,7 @@ trait RetrieveData
      * Define a set of columns to select from database.
      *
      * @param array $columns
+     *
      * @return $this
      */
     public function select(array $columns = []) :self
