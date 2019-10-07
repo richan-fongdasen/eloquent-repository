@@ -204,6 +204,7 @@ trait RetrieveData
      * Add a set of model relationship to retrieve from database.
      *
      * @param array $relations
+     *
      * @return $this
      */
     public function with(array $relations) :self
