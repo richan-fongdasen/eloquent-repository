@@ -35,6 +35,13 @@ trait RetrieveData
     protected $order;
 
     /**
+     * The relationships that should be eager loaded.
+     *
+     * @var array
+     */
+    protected $withRelations;
+
+    /**
      * Get all of the models from the database.
      *
      * @return \Illuminate\Database\Eloquent\Collection
@@ -54,6 +61,7 @@ trait RetrieveData
         $this->columns = ['*'];
         $this->limit = 0;
         $this->order = [];
+        $this->withRelations = [];
     }
 
     /**
@@ -193,6 +201,19 @@ trait RetrieveData
     }
 
     /**
+     * Add a set of model relationship to retrieve from database.
+     *
+     * @param array $relations
+     * @return $this
+     */
+    public function with(array $relations) :self
+    {
+        $this->withRelations = array_merge($this->withRelations, $relations);
+
+        return $this;
+    }
+
+    /**
      * Apply the given where clauses into a new query and
      * paginate the query into a length aware paginator.
      *
@@ -225,9 +246,7 @@ trait RetrieveData
     {
         $query = $this->newQuery();
 
-        return (method_exists($query, 'lists')) ?
-            $query->lists($column, $key) :
-            $query->pluck($column, $key);
+        return $query->pluck($column, $key);
     }
 
     /**
@@ -239,6 +258,10 @@ trait RetrieveData
      */
     protected function prepareQuery(Builder $query) :Builder
     {
+        if (count($this->withRelations) > 0) {
+            $query->with($this->withRelations);
+        }
+
         $query->select($this->columns);
 
         if ($this->limit > 0) {

@@ -197,4 +197,13 @@ class RetrieveDataTests extends TestCase
         $this->assertEquals($count, $paginator->total());
         $this->assertEquals(2, $paginator->perPage());
     }
+
+    /** @test */
+    public function it_can_retrieve_row_and_some_of_its_relationship_from_database()
+    {
+        $actual = $this->post->with(['postCategory'])->find(1)->toArray();
+
+        $this->assertArrayHasKey('post_category', $actual);
+        $this->assertEquals(data_get($actual, 'post_category_id'), data_get($actual, 'post_category.id'));
+    }
 }
