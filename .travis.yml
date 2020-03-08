@@ -1,6 +1,6 @@
 language: php
-sudo: false
-dist: trusty
+os: linux
+dist: bionic
 
 matrix:
   fast_finish: true
