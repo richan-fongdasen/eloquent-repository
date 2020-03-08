@@ -24,7 +24,7 @@ class WithTrashedCriteria implements Criteria
      *
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function manipulate(Builder $query) :Builder
+    public function manipulate(Builder $query): Builder
     {
         if ($this->modelHasSoftDeletes()) {
             return $query->withTrashed();
@@ -39,7 +39,7 @@ class WithTrashedCriteria implements Criteria
      *
      * @return bool
      */
-    public function modelHasSoftDeletes() :bool
+    public function modelHasSoftDeletes(): bool
     {
         return in_array(SoftDeletes::class, class_uses_recursive($this->model), true);
     }
@@ -50,7 +50,7 @@ class WithTrashedCriteria implements Criteria
      *
      * @return bool
      */
-    public function onDemandOnly() :bool
+    public function onDemandOnly(): bool
     {
         return false;
     }
@@ -62,7 +62,7 @@ class WithTrashedCriteria implements Criteria
      *
      * @return void
      */
-    public function setModel(Model $model) :void
+    public function setModel(Model $model): void
     {
         $this->model = $model;
     }

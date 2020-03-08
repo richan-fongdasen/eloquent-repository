@@ -15,7 +15,7 @@ trait ManipulateData
      *
      * @return \Illuminate\Database\Eloquent\Model
      */
-    public function create(array $attributes) :Model
+    public function create(array $attributes): Model
     {
         return $this->newModel()->create($attributes);
     }
@@ -30,7 +30,7 @@ trait ManipulateData
      *
      * @return bool
      */
-    public function delete($key) :bool
+    public function delete($key): bool
     {
         return $this->plainQuery()->findOrFail($key)->delete();
     }
@@ -67,7 +67,7 @@ trait ManipulateData
      *
      * @return bool
      */
-    public function restore($key) :bool
+    public function restore($key): bool
     {
         return $this->plainQuery()
             ->withTrashed()
@@ -86,7 +86,7 @@ trait ManipulateData
      *
      * @return bool
      */
-    public function update($key, array $attributes) :bool
+    public function update($key, array $attributes): bool
     {
         $model = $this->plainQuery()
             ->find($key);
@@ -116,12 +116,12 @@ trait ManipulateData
      *
      * @return \Illuminate\Database\Eloquent\Model
      */
-    abstract public function newModel() :Model;
+    abstract public function newModel(): Model;
 
     /**
      * Get new plain eloquent query builder instance.
      *
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    abstract public function plainQuery() :Builder;
+    abstract public function plainQuery(): Builder;
 }
