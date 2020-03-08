@@ -71,7 +71,7 @@ class PaginationCriteria implements Criteria
      *
      * @return \Illuminate\Pagination\LengthAwarePaginator
      */
-    public function buildPaginator(Builder $query, int $perPage) :LengthAwarePaginator
+    public function buildPaginator(Builder $query, int $perPage): LengthAwarePaginator
     {
         $this->setPerPage($perPage);
         $this->manipulate($query);
@@ -98,7 +98,7 @@ class PaginationCriteria implements Criteria
      *
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function manipulate(Builder $query) :Builder
+    public function manipulate(Builder $query): Builder
     {
         $this->recordCount = $query->toBase()->getCountForPagination();
 
@@ -113,7 +113,7 @@ class PaginationCriteria implements Criteria
      *
      * @return bool
      */
-    public function onDemandOnly() :bool
+    public function onDemandOnly(): bool
     {
         return true;
     }
@@ -126,7 +126,7 @@ class PaginationCriteria implements Criteria
      *
      * @return int
      */
-    protected function resolveCurrentPage(Request $request) :int
+    protected function resolveCurrentPage(Request $request): int
     {
         $page = (int) $request->input($this->pageName);
 
@@ -140,7 +140,7 @@ class PaginationCriteria implements Criteria
      *
      * @return void
      */
-    public function setModel(Model $model) :void
+    public function setModel(Model $model): void
     {
         $this->model = $model;
     }
@@ -152,7 +152,7 @@ class PaginationCriteria implements Criteria
      *
      * @return void
      */
-    public function setPerPage(int $perPage) :void
+    public function setPerPage(int $perPage): void
     {
         if ($perPage < 1) {
             $perPage = $this->model->getPerPage();

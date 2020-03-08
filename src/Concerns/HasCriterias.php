@@ -25,7 +25,7 @@ trait HasCriterias
      *
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    protected function applyCriterias(Builder $query) :Builder
+    protected function applyCriterias(Builder $query): Builder
     {
         $this->criterias->each(function ($criteria, $key) use ($query) {
             if (!$criteria->onDemandOnly()) {
@@ -43,7 +43,7 @@ trait HasCriterias
      *
      * @return void
      */
-    protected function bootHasCriterias() :void
+    protected function bootHasCriterias(): void
     {
         $this->flushCriteria();
     }
@@ -56,7 +56,7 @@ trait HasCriterias
      *
      * @return void
      */
-    protected function buildCriteria($criteria) :void
+    protected function buildCriteria($criteria): void
     {
         if (is_string($criteria)) {
             $criteria = \App::make($criteria);
@@ -76,7 +76,7 @@ trait HasCriterias
      *
      * @return void
      */
-    public function flushCriteria() :void
+    public function flushCriteria(): void
     {
         $this->criterias = collect();
     }
@@ -88,7 +88,7 @@ trait HasCriterias
      *
      * @return void
      */
-    protected function forgetCriteria(string $criteria) :void
+    protected function forgetCriteria(string $criteria): void
     {
         if ($this->criterias->has($criteria)) {
             $this->criterias->forget($criteria);
@@ -122,7 +122,7 @@ trait HasCriterias
      *
      * @return $this
      */
-    public function pushCriteria(array $criterias) :self
+    public function pushCriteria(array $criterias): self
     {
         foreach ($criterias as $criteria) {
             $this->buildCriteria($criteria);
@@ -138,7 +138,7 @@ trait HasCriterias
      *
      * @return $this
      */
-    public function removeCriteria($criterias) :self
+    public function removeCriteria($criterias): self
     {
         $criterias = (array) $criterias;
 
@@ -154,5 +154,5 @@ trait HasCriterias
      *
      * @return \Illuminate\Database\Eloquent\Model
      */
-    abstract public function newModel() :Model;
+    abstract public function newModel(): Model;
 }

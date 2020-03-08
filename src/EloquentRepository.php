@@ -39,7 +39,7 @@ abstract class EloquentRepository
      *
      * @return void
      */
-    protected function bootTraits() :void
+    protected function bootTraits(): void
     {
         $class = get_class($this);
 
@@ -56,7 +56,7 @@ abstract class EloquentRepository
      *
      * @return \Illuminate\Database\Eloquent\Model
      */
-    public function newModel() :Model
+    public function newModel(): Model
     {
         return $this->model->newInstance();
     }
@@ -66,7 +66,7 @@ abstract class EloquentRepository
      *
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function newQuery() :Builder
+    public function newQuery(): Builder
     {
         $query = $this->applyCriterias($this->plainQuery());
 
@@ -78,7 +78,7 @@ abstract class EloquentRepository
      *
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function plainQuery() :Builder
+    public function plainQuery(): Builder
     {
         return $this->model->newQuery();
     }

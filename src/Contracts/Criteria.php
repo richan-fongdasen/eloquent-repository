@@ -15,7 +15,7 @@ interface Criteria
      *
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function manipulate(Builder $query) :Builder;
+    public function manipulate(Builder $query): Builder;
 
     /**
      * Specify whether the criteria will only be implemented
@@ -23,7 +23,7 @@ interface Criteria
      *
      * @return bool
      */
-    public function onDemandOnly() :bool;
+    public function onDemandOnly(): bool;
 
     /**
      * Set a model object for the criteria.
@@ -32,5 +32,5 @@ interface Criteria
      *
      * @return void
      */
-    public function setModel(Model $model) :void;
+    public function setModel(Model $model): void;
 }
