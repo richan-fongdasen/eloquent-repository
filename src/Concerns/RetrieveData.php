@@ -46,7 +46,7 @@ trait RetrieveData
      *
      * @return \Illuminate\Database\Eloquent\Collection
      */
-    public function all() :Collection
+    public function all(): Collection
     {
         return $this->newQuery()->get();
     }
@@ -56,7 +56,7 @@ trait RetrieveData
      *
      * @return void
      */
-    protected function bootRetrieveData() :void
+    protected function bootRetrieveData(): void
     {
         $this->columns = ['*'];
         $this->limit = 0;
@@ -74,7 +74,7 @@ trait RetrieveData
      *
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    protected function buildMultipleScope(Builder $query, array $conditions) :Builder
+    protected function buildMultipleScope(Builder $query, array $conditions): Builder
     {
         return method_exists($query->getQuery(), 'addArrayOfWheres') ?
             $query->where($conditions) :
@@ -103,7 +103,7 @@ trait RetrieveData
      *
      * @return \Illuminate\Database\Eloquent\Collection
      */
-    public function findAllBy(string $column, string $operator, string $value = null) :Collection
+    public function findAllBy(string $column, string $operator, string $value = null): Collection
     {
         return $this->newQuery()
             ->where($column, $operator, $value)
@@ -118,7 +118,7 @@ trait RetrieveData
      *
      * @return \Illuminate\Database\Eloquent\Collection
      */
-    public function findAllWhere(array $conditions) :Collection
+    public function findAllWhere(array $conditions): Collection
     {
         return $this->buildMultipleScope($this->newQuery(), $conditions)
             ->get();
@@ -134,7 +134,7 @@ trait RetrieveData
      *
      * @return \Illuminate\Database\Eloquent\Model|null
      */
-    public function findBy(string $column, string $operator, string $value = null) :?Model
+    public function findBy(string $column, string $operator, string $value = null): ?Model
     {
         return $this->newQuery()
             ->where($column, $operator, $value)
@@ -149,7 +149,7 @@ trait RetrieveData
      *
      * @return \Illuminate\Database\Eloquent\Model|null
      */
-    public function findWhere(array $conditions) :?Model
+    public function findWhere(array $conditions): ?Model
     {
         return $this->buildMultipleScope($this->newQuery(), $conditions)->first();
     }
@@ -161,7 +161,7 @@ trait RetrieveData
      *
      * @return \RichanFongdasen\Repository\Criterias\PaginationCriteria
      */
-    protected function getPaginatorCriteria() :PaginationCriteria
+    protected function getPaginatorCriteria(): PaginationCriteria
     {
         $paginator = $this->getCriteria(PaginationCriteria::class);
         if (!$paginator) {
@@ -178,7 +178,7 @@ trait RetrieveData
      *
      * @return $this
      */
-    public function limit(int $limit) :self
+    public function limit(int $limit): self
     {
         $this->limit = $limit;
 
@@ -193,7 +193,7 @@ trait RetrieveData
      *
      * @return $this
      */
-    public function orderBy(string $column, string $direction = 'asc') :self
+    public function orderBy(string $column, string $direction = 'asc'): self
     {
         $this->order[$column] = $direction;
 
@@ -207,7 +207,7 @@ trait RetrieveData
      *
      * @return $this
      */
-    public function with(array $relations) :self
+    public function with(array $relations): self
     {
         $this->withRelations = array_merge($this->withRelations, $relations);
 
@@ -225,7 +225,7 @@ trait RetrieveData
      *
      * @return \Illuminate\Pagination\LengthAwarePaginator
      */
-    public function paginate(array $conditions = [], int $perPage = 0) :LengthAwarePaginator
+    public function paginate(array $conditions = [], int $perPage = 0): LengthAwarePaginator
     {
         $this->limit(0);
 
@@ -243,7 +243,7 @@ trait RetrieveData
      *
      * @return \Illuminate\Support\Collection
      */
-    public function pluck(string $column, string $key = null) :BaseCollection
+    public function pluck(string $column, string $key = null): BaseCollection
     {
         $query = $this->newQuery();
 
@@ -257,7 +257,7 @@ trait RetrieveData
      *
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    protected function prepareQuery(Builder $query) :Builder
+    protected function prepareQuery(Builder $query): Builder
     {
         if (count($this->withRelations) > 0) {
             $query->with($this->withRelations);
@@ -283,7 +283,7 @@ trait RetrieveData
      *
      * @return void
      */
-    protected function rebootRetrieveData() :void
+    protected function rebootRetrieveData(): void
     {
         $this->bootRetrieveData();
     }
@@ -295,7 +295,7 @@ trait RetrieveData
      *
      * @return $this
      */
-    public function select(array $columns = []) :self
+    public function select(array $columns = []): self
     {
         if (empty($columns)) {
             $columns = ['*'];
@@ -319,5 +319,5 @@ trait RetrieveData
      *
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    abstract public function newQuery() :Builder;
+    abstract public function newQuery(): Builder;
 }
