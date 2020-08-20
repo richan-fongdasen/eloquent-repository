@@ -28,9 +28,9 @@ trait ManipulateData
      *
      * @throws \Exception
      *
-     * @return bool
+     * @return bool|null
      */
-    public function delete($key): bool
+    public function delete($key): ?bool
     {
         return $this->plainQuery()->findOrFail($key)->delete();
     }
@@ -92,7 +92,7 @@ trait ManipulateData
             ->find($key);
 
         if (!($model instanceof Model)) {
-            throw new ModelNotFoundException('Failed to retrieve model '.get_class($this->model).' with key: '.$key);
+            throw new ModelNotFoundException('Failed to retrieve model ' . get_class($this->model) . ' with key: ' . $key);
         }
 
         return $model->update($attributes);
