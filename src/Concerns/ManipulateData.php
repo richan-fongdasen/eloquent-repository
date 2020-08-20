@@ -92,7 +92,7 @@ trait ManipulateData
             ->find($key);
 
         if (!($model instanceof Model)) {
-            throw new ModelNotFoundException('Failed to retrieve model ' . get_class($this->model) . ' with key: ' . $key);
+            throw new ModelNotFoundException('Failed to retrieve model '.get_class($this->model).' with key: '.$key);
         }
 
         return $model->update($attributes);
