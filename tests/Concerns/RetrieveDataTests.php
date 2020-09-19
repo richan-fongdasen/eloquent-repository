@@ -182,7 +182,7 @@ class RetrieveDataTests extends TestCase
     /** @test */
     public function it_raises_exception_when_paginating_query_without_using_pagination_criteria()
     {
-        $this->prepareException(ErrorException::class);
+        $this->expectException(ErrorException::class);
         $paginator = $this->post->paginate(['published' => true]);
     }
 

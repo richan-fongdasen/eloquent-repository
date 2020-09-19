@@ -78,7 +78,7 @@ class HasCriteriasTests extends TestCase
     /** @test */
     public function it_will_raise_exception_when_pushing_non_criteria_object()
     {
-        $this->prepareException(InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->repository->pushCriteria([$this->repository->newModel()]);
     }
 

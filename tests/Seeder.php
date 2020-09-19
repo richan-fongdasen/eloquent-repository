@@ -29,7 +29,7 @@ class Seeder
      */
     public function seedComments()
     {
-        factory(Comment::class, 50)->create();
+        Comment::factory(50)->create();
     }
 
     /**
@@ -39,7 +39,7 @@ class Seeder
      */
     public function seedPostCategories()
     {
-        factory(PostCategory::class, 3)->create();
+        PostCategory::factory(3)->create();
     }
 
     /**
@@ -49,7 +49,7 @@ class Seeder
      */
     public function seedPosts()
     {
-        factory(Post::class, 27)->create();
+        Post::factory(27)->create();
     }
 
     /**
@@ -59,6 +59,6 @@ class Seeder
      */
     public function seedUsers()
     {
-        factory(User::class, 3)->create();
+        User::factory(3)->create();
     }
 }

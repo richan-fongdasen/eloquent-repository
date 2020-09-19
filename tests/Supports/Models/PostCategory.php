@@ -2,11 +2,13 @@
 
 namespace RichanFongdasen\Repository\Tests\Supports\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class PostCategory extends Model
 {
+    use HasFactory;
     use SoftDeletes;
     
     /**
