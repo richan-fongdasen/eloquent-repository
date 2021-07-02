@@ -100,6 +100,8 @@ jobs:
           php-version: ${{ matrix.php }}
           extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite, bcmath, soap, intl, gd, exif, iconv
           coverage: none
+      - name: Remove some dev dependencies
+        run: composer remove "ekino/phpstan-banned-code" "nunomaduro/larastan" "phpmd/phpmd" "phpstan/phpstan-deprecation-rules" "sebastian/phpcpd" --dev --no-update
       - name: Require Laravel 7
         run: composer require laravel/framework:^7.0 orchestra/testbench:^5.0 orchestra/database:^5.0 --no-update
       - name: Install composer dependencies
