@@ -40,9 +40,9 @@ jobs:
       - name: Install composer dependencies
         run: composer install --prefer-dist
       - name: Run phpstan analysis
-        run: composer phpstan-analysis
+        run: vendor/bin/phpstan analyse src/
       - name: Run phpmd analysis
-        run: composer phpmd-analysis
+        run: vendor/bin/phpmd src/ text codesize,controversial,design,naming,unusedcode,.phpmd.cleancode.xml
       - name: Run phpcpd analysis
         run: vendor/bin/phpcpd --min-lines=3 --min-tokens=36 src/
   laravel5:
