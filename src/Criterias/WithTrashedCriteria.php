@@ -27,6 +27,7 @@ class WithTrashedCriteria implements Criteria
     public function manipulate(Builder $query): Builder
     {
         if ($this->modelHasSoftDeletes()) {
+            /* @phpstan-ignore-next-line */
             return $query->withTrashed();
         }
 
