@@ -32,7 +32,7 @@ trait ManipulateData
      */
     public function delete($key): ?bool
     {
-        return $this->plainQuery()->findOrFail($key)->delete();
+        return optional($this->plainQuery()->findOrFail($key))->delete();
     }
 
     /**
@@ -69,6 +69,7 @@ trait ManipulateData
      */
     public function restore($key): bool
     {
+        /* @phpstan-ignore-next-line */
         return $this->plainQuery()
             ->withTrashed()
             ->findOrFail($key)
