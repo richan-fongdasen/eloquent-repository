@@ -11,14 +11,14 @@ use RichanFongdasen\Repository\Contracts\Criteria;
 trait HasCriterias
 {
     /**
-     * Registered criterias collection.
+     * Registered criteria collection.
      *
      * @var \Illuminate\Support\Collection
      */
-    protected $criterias;
+    protected Collection $criterias;
 
     /**
-     * Apply the registered criterias to
+     * Apply the registered criteria to
      * the given Eloquent Builder.
      *
      * @param \Illuminate\Database\Eloquent\Builder $query
@@ -72,13 +72,13 @@ trait HasCriterias
     }
 
     /**
-     * Flush all of registered criterias.
+     * Flush all the registered criteria.
      *
      * @return void
      */
     public function flushCriteria(): void
     {
-        $this->criterias = collect();
+        $this->criterias = new Collection();
     }
 
     /**

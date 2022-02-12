@@ -34,7 +34,7 @@ abstract class EloquentRepository
     }
 
     /**
-     * Boot all of the traits that being used by this
+     * Boot all the traits that being used by this
      * repository.
      *
      * @return void

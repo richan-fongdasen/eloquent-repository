@@ -15,14 +15,14 @@ class PaginationCriteria implements Criteria
      *
      * @var int
      */
-    protected $currentPage;
+    protected int $currentPage;
 
     /**
      * The base path to assign to all URLs.
      *
      * @var string
      */
-    protected $currentPath;
+    protected string $currentPath;
 
     /**
      * Eloquent model associated to the criteria.
@@ -36,21 +36,21 @@ class PaginationCriteria implements Criteria
      *
      * @var string
      */
-    protected $pageName = 'page';
+    protected string $pageName = 'page';
 
     /**
      * The number of items to be shown per page.
      *
      * @var int
      */
-    protected $perPage = 15;
+    protected int $perPage = 15;
 
     /**
      * Total records count.
      *
      * @var int
      */
-    protected $recordCount;
+    protected int $recordCount;
 
     /**
      * Class constructor.

@@ -18,31 +18,31 @@ trait RetrieveData
      *
      * @var array
      */
-    protected $columns;
+    protected array $columns;
 
     /**
      * The maximum number of records to return.
      *
      * @var int
      */
-    protected $limit;
+    protected int $limit;
 
     /**
      * The orderings for the query.
      *
      * @var array
      */
-    protected $order;
+    protected array $order;
 
     /**
      * The relationships that should be eager loaded.
      *
      * @var array
      */
-    protected $withRelations;
+    protected array $withRelations;
 
     /**
-     * Get all of the models from the database.
+     * Get all the models from the database.
      *
      * @return \Illuminate\Database\Eloquent\Collection
      */
