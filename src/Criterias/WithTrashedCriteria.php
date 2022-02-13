@@ -63,7 +63,7 @@ class WithTrashedCriteria implements Criteria
      *
      * @return void
      */
-    public function setModel(Model $model): void
+    public function setModel($model): void
     {
         $this->model = $model;
     }

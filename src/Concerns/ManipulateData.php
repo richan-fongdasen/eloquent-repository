@@ -24,7 +24,7 @@ trait ManipulateData
      * Find and delete a model from the database
      * based on the given primary key.
      *
-     * @param mixed $key
+     * @param int|string $key
      *
      * @throws \Exception
      *
@@ -63,7 +63,7 @@ trait ManipulateData
      * Find and restore a soft-deleted model instance
      * based on the given primary key.
      *
-     * @param mixed $key
+     * @param int|string $key
      *
      * @return bool
      */
@@ -80,7 +80,7 @@ trait ManipulateData
      * Find and update a model in the database
      * based on the given primary key.
      *
-     * @param mixed $key
+     * @param int|string $key
      * @param array $attributes
      *
      * @throws ModelNotFoundException
@@ -117,7 +117,7 @@ trait ManipulateData
      *
      * @return \Illuminate\Database\Eloquent\Model
      */
-    abstract public function newModel(): Model;
+    abstract public function newModel();
 
     /**
      * Get new plain eloquent query builder instance.

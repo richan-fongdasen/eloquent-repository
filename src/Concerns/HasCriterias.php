@@ -132,9 +132,9 @@ trait HasCriterias
     }
 
     /**
-     * Remove / unregister the given criterias.
+     * Remove / unregister the given criteria.
      *
-     * @param mixed $criterias
+     * @param string|array $criterias
      *
      * @return $this
      */
@@ -154,5 +154,5 @@ trait HasCriterias
      *
      * @return \Illuminate\Database\Eloquent\Model
      */
-    abstract public function newModel(): Model;
+    abstract public function newModel();
 }

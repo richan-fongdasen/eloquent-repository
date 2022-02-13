@@ -26,7 +26,7 @@ abstract class EloquentRepository
      *
      * @param Model $model [description]
      */
-    public function __construct(Model $model)
+    public function __construct($model)
     {
         $this->model = $model;
 
@@ -56,7 +56,7 @@ abstract class EloquentRepository
      *
      * @return \Illuminate\Database\Eloquent\Model
      */
-    public function newModel(): Model
+    public function newModel()
     {
         return $this->model->newInstance();
     }

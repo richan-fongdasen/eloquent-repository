@@ -84,7 +84,7 @@ trait RetrieveData
     /**
      * Find one or more models by its primary keys.
      *
-     * @param mixed $key
+     * @param int|string $key
      *
      * @return \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Collection|static[]|static|null|mixed
      */
@@ -134,7 +134,7 @@ trait RetrieveData
      *
      * @return \Illuminate\Database\Eloquent\Model|null
      */
-    public function findBy(string $column, string $operator, string $value = null): ?Model
+    public function findBy(string $column, string $operator, ?string $value = null): ?Model
     {
         return $this->newQuery()
             ->where($column, $operator, $value)
@@ -243,7 +243,7 @@ trait RetrieveData
      *
      * @return \Illuminate\Support\Collection
      */
-    public function pluck(string $column, string $key = null): BaseCollection
+    public function pluck(string $column, ?string $key = null): BaseCollection
     {
         $query = $this->newQuery();
 
