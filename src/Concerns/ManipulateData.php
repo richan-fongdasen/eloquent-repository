@@ -81,7 +81,7 @@ trait ManipulateData
      * based on the given primary key.
      *
      * @param int|string $key
-     * @param array $attributes
+     * @param array      $attributes
      *
      * @throws ModelNotFoundException
      *
