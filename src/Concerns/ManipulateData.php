@@ -40,7 +40,7 @@ trait ManipulateData
      *
      * @param array $attributes
      *
-     * @return \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Model
+     * @return \Illuminate\Database\Eloquent\Model
      */
     public function firstOrCreate(array $attributes)
     {
@@ -52,7 +52,7 @@ trait ManipulateData
      *
      * @param array $attributes
      *
-     * @return \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Model
+     * @return \Illuminate\Database\Eloquent\Model
      */
     public function firstOrNew(array $attributes)
     {
@@ -105,7 +105,7 @@ trait ManipulateData
      * @param array $attributes
      * @param array $values
      *
-     * @return \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Model
+     * @return \Illuminate\Database\Eloquent\Model
      */
     public function updateOrCreate(array $attributes, array $values)
     {
