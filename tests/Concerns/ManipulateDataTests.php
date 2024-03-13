@@ -2,6 +2,7 @@
 
 namespace RichanFongdasen\Repository\Tests\Concerns;
 
+use PHPUnit\Framework\Attributes\Test;
 use RichanFongdasen\Repository\Tests\Supports\Models\Post;
 use RichanFongdasen\Repository\Tests\Supports\Models\PostCategory;
 use RichanFongdasen\Repository\Tests\Supports\Repositories\PostCategoryRepository;
@@ -22,7 +23,7 @@ class ManipulateDataTests extends TestCase
      *
      * @return void
      */
-    public function setUp() :void
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -43,7 +44,7 @@ class ManipulateDataTests extends TestCase
         ]);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_create_new_model_based_on_the_given_attribute()
     {
         $model = $this->createNewPost();
@@ -54,7 +55,7 @@ class ManipulateDataTests extends TestCase
         $this->assertTrue($model->wasRecentlyCreated);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_delete_existing_model_based_on_the_given_primary_key()
     {
         $model = $this->createNewPost();
@@ -63,7 +64,7 @@ class ManipulateDataTests extends TestCase
         $this->assertNull($this->repository->find($model->getKey()));
     }
 
-    /** @test */
+    #[Test]
     public function it_can_perform_first_or_create_operation()
     {
         $this->createNewPost();
@@ -80,7 +81,7 @@ class ManipulateDataTests extends TestCase
         $this->assertTrue($model->wasRecentlyCreated);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_perform_first_or_new_operation()
     {
         $this->createNewPost();
@@ -93,11 +94,11 @@ class ManipulateDataTests extends TestCase
         $this->assertFalse($model->exists);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_restore_deleted_model_based_on_the_given_primary_key()
     {
         $repository = app(PostCategoryRepository::class);
-        $model = $repository->create(['title' => 'test category']);        
+        $model = $repository->create(['title' => 'test category']);
 
         $repository->delete($model->getKey());
         $repository->restore($model->getKey());
@@ -110,7 +111,7 @@ class ManipulateDataTests extends TestCase
         $this->assertFalse($restored->wasRecentlyCreated);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_update_created_model()
     {
         $model = $this->createNewPost();
@@ -126,7 +127,7 @@ class ManipulateDataTests extends TestCase
         $this->assertEquals('updated content', $updated->content);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_perform_update_or_create_operation()
     {
         $this->createNewPost();

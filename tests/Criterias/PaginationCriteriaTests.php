@@ -4,6 +4,7 @@ namespace RichanFongdasen\Repository\Tests\Criterias;
 
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
+use PHPUnit\Framework\Attributes\Test;
 use RichanFongdasen\Repository\Criterias\PaginationCriteria;
 use RichanFongdasen\Repository\Tests\Supports\Models\PostCategory;
 use RichanFongdasen\Repository\Tests\Supports\Repositories\PostRepository;
@@ -37,7 +38,7 @@ class PaginationCriteriaTests extends TestCase
      *
      * @return void
      */
-    public function setUp() :void
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -65,7 +66,7 @@ class PaginationCriteriaTests extends TestCase
             ->andReturn($this->page);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_be_initiated_using_the_given_request_object()
     {
         $this->prepareMockedRequest();
@@ -76,7 +77,7 @@ class PaginationCriteriaTests extends TestCase
         $this->assertEquals($this->page, $this->getPropertyValue($criteria, 'currentPage'));
     }
 
-    /** @test */
+    #[Test]
     public function it_can_normalize_invalid_request_page_value()
     {
         $baseUrl = 'http://localhost:8000/news/index';
@@ -96,7 +97,7 @@ class PaginationCriteriaTests extends TestCase
         $this->assertEquals(1, $this->getPropertyValue($criteria, 'currentPage'));
     }
 
-    /** @test */
+    #[Test]
     public function it_can_set_per_page_value()
     {
         $this->prepareMockedRequest();
@@ -107,7 +108,7 @@ class PaginationCriteriaTests extends TestCase
         $this->assertEquals(30, $this->getPropertyValue($criteria, 'perPage'));
     }
 
-    /** @test */
+    #[Test]
     public function it_can_normalize_invalid_per_page_value()
     {
         $this->prepareMockedRequest();
@@ -119,7 +120,7 @@ class PaginationCriteriaTests extends TestCase
         $this->assertEquals(15, $this->getPropertyValue($criteria, 'perPage'));
     }
 
-    /** @test */
+    #[Test]
     public function it_can_build_paginator_as_expected()
     {
         $this->seeder->seedAll();

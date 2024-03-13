@@ -2,6 +2,7 @@
 
 namespace RichanFongdasen\Repository\Tests;
 
+use PHPUnit\Framework\Attributes\Test;
 use RichanFongdasen\Repository\Criterias\WithTrashedCriteria;
 use RichanFongdasen\Repository\Tests\Supports\Models\Post;
 use RichanFongdasen\Repository\Tests\Supports\Repositories\PostCategoryRepository;
@@ -21,7 +22,7 @@ class EloquentRepositoryTests extends TestCase
      *
      * @return void
      */
-    public function setUp() :void
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -30,7 +31,7 @@ class EloquentRepositoryTests extends TestCase
         $this->repository = app(PostRepository::class);
     }
 
-    /** @test */
+    #[Test]
     public function it_returns_new_model_instance_as_expected()
     {
         $model = $this->repository->newModel();
@@ -40,7 +41,7 @@ class EloquentRepositoryTests extends TestCase
         $this->assertNull($model->getKey());
     }
 
-    /** @test */
+    #[Test]
     public function it_returns_new_prepared_eloquent_query_object_as_expected()
     {
         $this->repository->select(['id', 'post_category_id', 'user_id', 'title'])
@@ -48,7 +49,7 @@ class EloquentRepositoryTests extends TestCase
             ->orderBy('created_at', 'desc');
 
         $query = $this->repository->newQuery();
-        
+
         $expected = \DB::table('posts')
             ->select(['id', 'post_category_id', 'user_id', 'title'])
             ->limit(5)
@@ -57,7 +58,7 @@ class EloquentRepositoryTests extends TestCase
         $this->assertEquals($expected, $query->toSql());
     }
 
-    /** @test */
+    #[Test]
     public function it_returns_plain_eloquent_query_object_as_expected()
     {
         $repository = app(PostCategoryRepository::class);
@@ -66,7 +67,7 @@ class EloquentRepositoryTests extends TestCase
             ->orderBy('created_at', 'desc');
 
         $query = $repository->plainQuery();
-        
+
         $expected = \DB::table('post_categories')->where('post_categories.deleted_at', null)
             ->toSql();
 

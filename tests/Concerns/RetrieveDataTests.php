@@ -5,6 +5,7 @@ namespace RichanFongdasen\Repository\Tests\Concerns;
 use ErrorException;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
+use PHPUnit\Framework\Attributes\Test;
 use RichanFongdasen\Repository\Criterias\PaginationCriteria;
 use RichanFongdasen\Repository\Criterias\WithTrashedCriteria;
 use RichanFongdasen\Repository\Tests\Supports\Models\Post;
@@ -33,7 +34,7 @@ class RetrieveDataTests extends TestCase
      *
      * @return void
      */
-    public function setUp() :void
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -43,7 +44,7 @@ class RetrieveDataTests extends TestCase
         $this->post = app(PostRepository::class);
     }
 
-    /** @test */
+    #[Test]
     public function it_returns_all_of_database_records_available()
     {
         $collection = $this->postCategory->all();
@@ -52,7 +53,7 @@ class RetrieveDataTests extends TestCase
         $this->assertEquals(3, $collection->count());
     }
 
-    /** @test */
+    #[Test]
     public function it_can_find_a_single_model_by_the_given_primary_key()
     {
         $post = $this->post->find(18);
@@ -62,7 +63,7 @@ class RetrieveDataTests extends TestCase
         $this->assertEquals(18, $post->getKey());
     }
 
-    /** @test */
+    #[Test]
     public function it_can_find_multiple_models_by_the_given_primary_keys()
     {
         $keys = [3, 9, 15];
@@ -80,7 +81,7 @@ class RetrieveDataTests extends TestCase
         }
     }
 
-    /** @test */
+    #[Test]
     public function it_can_find_multiple_models_based_on_the_given_column_and_value()
     {
         $collection = $this->post->select()->findAllBy('post_category_id', 2);
@@ -90,7 +91,7 @@ class RetrieveDataTests extends TestCase
         $this->assertEquals($count, $collection->count());
     }
 
-    /** @test */
+    #[Test]
     public function it_can_find_multiple_models_by_the_given_query_scopes()
     {
         $collection = $this->post->limit(-10)
@@ -106,7 +107,7 @@ class RetrieveDataTests extends TestCase
         $this->assertEquals($count, $collection->count());
     }
 
-    /** @test */
+    #[Test]
     public function it_can_find_a_single_model_by_the_given_column_and_value()
     {
         $actual = $this->post->select(['id', 'post_category_id', 'user_id', 'title'])
@@ -129,7 +130,7 @@ class RetrieveDataTests extends TestCase
         $this->assertNull($actual->modified_at);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_find_a_single_model_by_the_given_query_scopes()
     {
         $actual = $this->post->select(['id', 'post_category_id', 'user_id', 'title'])
@@ -157,7 +158,7 @@ class RetrieveDataTests extends TestCase
         $this->assertNull($actual->modified_at);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_normalize_null_sort_direction()
     {
         $expected = \DB::table('posts')->orderBy('post_category_id', 'asc')->toSql();
@@ -167,7 +168,7 @@ class RetrieveDataTests extends TestCase
         $this->assertEquals($expected, $query->toSql());
     }
 
-    /** @test */
+    #[Test]
     public function it_returns_an_array_list_as_expected()
     {
         $collection = $this->postCategory->pluck('title', 'id');
@@ -179,14 +180,14 @@ class RetrieveDataTests extends TestCase
         $this->assertEquals(3, $collection->count());
     }
 
-    /** @test */
+    #[Test]
     public function it_raises_exception_when_paginating_query_without_using_pagination_criteria()
     {
         $this->expectException(ErrorException::class);
         $paginator = $this->post->paginate(['published' => true]);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_build_paginated_records_based_on_the_given_query_scopes()
     {
         $paginator = $this->post->pushCriteria([PaginationCriteria::class])
@@ -198,7 +199,7 @@ class RetrieveDataTests extends TestCase
         $this->assertEquals(2, $paginator->perPage());
     }
 
-    /** @test */
+    #[Test]
     public function it_can_retrieve_row_and_some_of_its_relationship_from_database()
     {
         $actual = $this->post->with(['postCategory'])->find(1)->toArray();

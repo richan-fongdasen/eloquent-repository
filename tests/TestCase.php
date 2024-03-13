@@ -31,7 +31,7 @@ abstract class TestCase extends BaseTest
     {
         $this->app = $app;
         $this->seeder = new Seeder;
-        
+
         $app['config']->set('cache.default', 'array');
         $app['config']->set('database.default', 'testbench');
         $app['config']->set('database.connections.testbench', [
@@ -49,8 +49,7 @@ abstract class TestCase extends BaseTest
      */
     protected function getPackageAliases($app)
     {
-        return [
-        ];
+        return [];
     }
 
     /**
@@ -61,9 +60,7 @@ abstract class TestCase extends BaseTest
      */
     protected function getPackageProviders($app)
     {
-        return [
-            \Orchestra\Database\ConsoleServiceProvider::class,
-        ];
+        return [];
     }
 
     /**
@@ -95,7 +92,7 @@ abstract class TestCase extends BaseTest
         $reflection = new \ReflectionClass(get_class($object));
         $property = $reflection->getProperty($propertyName);
         $property->setAccessible(true);
- 
+
         return $property->getValue($object);
     }
 
@@ -106,7 +103,7 @@ abstract class TestCase extends BaseTest
      */
     protected function listenForAnyQueries()
     {
-        \DB::listen(function($query) {
+        \DB::listen(function ($query) {
             echo "\r\n" . $query->sql . "\r\n";
             return true;
         });
@@ -129,7 +126,7 @@ abstract class TestCase extends BaseTest
      *
      * @return void
      */
-    public function setUp() :void
+    public function setUp(): void
     {
         parent::setUp();
 

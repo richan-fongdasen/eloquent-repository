@@ -2,6 +2,7 @@
 
 namespace RichanFongdasen\Repository\Tests\Criterias;
 
+use PHPUnit\Framework\Attributes\Test;
 use RichanFongdasen\Repository\Criterias\WithTrashedCriteria;
 use RichanFongdasen\Repository\Tests\Supports\Models\Post;
 use RichanFongdasen\Repository\Tests\Supports\Repositories\PostCategoryRepository;
@@ -28,7 +29,7 @@ class WithTrashedCriteriaTests extends TestCase
      *
      * @return void
      */
-    public function setUp() :void
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -36,7 +37,7 @@ class WithTrashedCriteriaTests extends TestCase
         $this->repository = app(PostCategoryRepository::class);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_confirm_if_the_current_affected_model_uses_soft_deletes()
     {
         $post = new Post;
@@ -48,7 +49,7 @@ class WithTrashedCriteriaTests extends TestCase
         $this->assertTrue($this->criteria->modelHasSoftDeletes());
     }
 
-    /** @test */
+    #[Test]
     public function it_will_manipulate_query_if_the_model_uses_soft_deletes()
     {
         $expected = \DB::table('post_categories')->select(['*'])->toSql();
@@ -58,7 +59,7 @@ class WithTrashedCriteriaTests extends TestCase
         $this->assertEquals($expected, $query->toSql());
     }
 
-    /** @test */
+    #[Test]
     public function it_wont_manipulate_query_if_the_model_doesnt_use_soft_deletes()
     {
         $post = new Post;
