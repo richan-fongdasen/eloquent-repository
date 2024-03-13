@@ -4,6 +4,7 @@ namespace RichanFongdasen\Repository\Tests\Concerns;
 
 use Illuminate\Support\Collection;
 use InvalidArgumentException;
+use PHPUnit\Framework\Attributes\Test;
 use RichanFongdasen\Repository\Criterias\PaginationCriteria;
 use RichanFongdasen\Repository\Criterias\WithTrashedCriteria;
 use RichanFongdasen\Repository\Tests\Supports\Models\Post;
@@ -25,14 +26,14 @@ class HasCriteriasTests extends TestCase
      *
      * @return void
      */
-    public function setUp() :void
+    public function setUp(): void
     {
         parent::setUp();
 
         $this->repository = app(PostRepository::class);
     }
 
-    /** @test */
+    #[Test]
     public function criterias_can_be_flushed_on_demand()
     {
         $this->repository->pushCriteria([WithTrashedCriteria::class]);
@@ -41,7 +42,7 @@ class HasCriteriasTests extends TestCase
         $this->assertNull($this->repository->getCriteria(WithTrashedCriteria::class));
     }
 
-    /** @test */
+    #[Test]
     public function it_will_returns_collection_when_getting_criterias_without_specifying_any_class_name()
     {
         $this->repository->pushCriteria([
@@ -56,7 +57,7 @@ class HasCriteriasTests extends TestCase
         $this->assertInstanceOf(PaginationCriteria::class, $criterias->last());
     }
 
-    /** @test */
+    #[Test]
     public function it_can_create_criteria_with_the_given_class_name()
     {
         $this->repository->pushCriteria([WithTrashedCriteria::class]);
@@ -65,7 +66,7 @@ class HasCriteriasTests extends TestCase
         $this->assertInstanceOf(WithTrashedCriteria::class, $actual);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_push_the_given_criteria_into_the_collection()
     {
         $criteria = new WithTrashedCriteria;
@@ -75,14 +76,14 @@ class HasCriteriasTests extends TestCase
         $this->assertInstanceOf(WithTrashedCriteria::class, $actual);
     }
 
-    /** @test */
+    #[Test]
     public function it_will_raise_exception_when_pushing_non_criteria_object()
     {
         $this->expectException(InvalidArgumentException::class);
         $this->repository->pushCriteria([$this->repository->newModel()]);
     }
 
-    /** @test */
+    #[Test]
     public function criteria_can_be_removed_on_demand()
     {
         $this->repository->pushCriteria([
@@ -97,7 +98,7 @@ class HasCriteriasTests extends TestCase
         $this->assertInstanceOf(PaginationCriteria::class, $criterias->first());
     }
 
-    /** @test */
+    #[Test]
     public function not_on_demand_criteria_will_be_implemented_immediately()
     {
         $repository = app(PostCategoryRepository::class);
@@ -113,7 +114,7 @@ class HasCriteriasTests extends TestCase
             ->orderBy('created_at', 'desc');
 
         $query = $repository->newQuery();
-        
+
         $this->assertEquals($expected, $query->toSql());
     }
 }

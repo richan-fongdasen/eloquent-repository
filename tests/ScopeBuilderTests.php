@@ -2,6 +2,7 @@
 
 namespace RichanFongdasen\Repository\Tests;
 
+use PHPUnit\Framework\Attributes\Test;
 use RichanFongdasen\Repository\Criterias\WithTrashedCriteria;
 use RichanFongdasen\Repository\ScopeBuilder;
 use RichanFongdasen\Repository\Tests\Supports\Models\Post;
@@ -21,17 +22,17 @@ class ScopeBuilderTests extends TestCase
      *
      * @return void
      */
-    public function setUp() :void
+    public function setUp(): void
     {
         parent::setUp();
 
         $this->repository = app(PostRepository::class);
     }
 
-    /** @test */
+    #[Test]
     public function pass_through_the_query_scope_on_numeric_columns()
     {
-        $datetime = date('Y-m-d H:i:s', time()-1209600); // two weeks ago
+        $datetime = date('Y-m-d H:i:s', time() - 1209600); // two weeks ago
         $params = [
             ['post_category_id', 1],
             ['created_at', '>', $datetime]
@@ -46,12 +47,12 @@ class ScopeBuilderTests extends TestCase
             $query = $this->repository->newQuery();
 
             ScopeBuilder::apply($query, $column, $value);
-            
+
             $this->assertEquals($expected[$column], $query->toSql());
         }
     }
 
-    /** @test */
+    #[Test]
     public function it_can_handle_single_scope_application_with_single_value_correctly()
     {
         $expected = \DB::table('posts')->where('published', true)->toSql();
@@ -61,7 +62,7 @@ class ScopeBuilderTests extends TestCase
         $this->assertEquals($expected, $query->toSql());
     }
 
-    /** @test */
+    #[Test]
     public function it_can_handle_single_scope_application_with_multiple_values_correctly()
     {
         $expected = \DB::table('posts')
@@ -72,7 +73,7 @@ class ScopeBuilderTests extends TestCase
         $this->assertEquals($expected, $query->toSql());
     }
 
-    /** @test */
+    #[Test]
     public function it_can_generate_and_apply_multiple_scopes_correctly()
     {
         $expected = \DB::table('posts')
