@@ -5,10 +5,12 @@ includes:
 
 parameters:
     level: 8
-    checkMissingIterableValueType: false
-    checkGenericClassInNonGenericObjectType: false
+    treatPhpDocTypesAsCertain: false
     paths:
         - src
+    ignoreErrors:
+        - identifier: missingType.iterableValue
+        - identifier: missingType.generics
     banned_code:
         nodes:
             - type: Expr_FuncCall
